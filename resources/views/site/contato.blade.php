@@ -87,36 +87,64 @@
                             </span>
                             <h2 class="sec-title">Envie-nos uma mensagem</h2>
                         </div>
-                        <form action="mail.php" method="POST" class="contact-form ajax-contact">
+                        <form action="{{ route('contato.enviar') }}" method="POST" class="contact-form" id="formContato">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style-white" name="name" id="name" placeholder="Seu Nome">
+                                        <input type="text" class="form-control style-white" name="nomeContato" id="nomeContato" placeholder="Seu Nome" value="{{ old('nomeContato') }}">
                                         <i class="far fa-user"></i>
+                                        @error('nomeContato')
+                                        <div class="error"> {{ $mensagem }}</div>
+
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style-white" name="email" id="email" placeholder="Endereço de Email">
+                                        <input type="text" class="form-control style-white" name="emailContato" id="emailContato" placeholder="Endereço de Email" value="{{ old('emailContato') }}">
                                         <i class="far fa-envelope"></i>
+                                        @error('emailContato')
+                                        <div class="error"> {{ $mensagem }}</div>
+
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control style-white" name="foneContato" id="foneContato" placeholder="Telefone" value="{{ old('foneContato') }}">
+                                        <i class="far fa-envelope"></i>
+                                        @error('foneContato')
+                                        <div class="error"> {{ $mensagem }}</div>
+
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <select name="subject" id="subject" class="form-select style-white">
+                                <select name="assuntoContato" id="assuntoContato" class="form-select style-white"  value="{{ old('assuntoContato') }}">
                                     <option value="" disabled="" selected="" hidden="">Selecione o assunto</option>
                                     <option value="one">Musculação</option>
                                     <option value="two">Levantamento de força</option>
                                     <option value="three">Aula de Meditação</option>
                                     <option value="four">Aula de boxe</option>
                                 </select>
+                                @error('assuntoContato')
+                                        <div class="error"> {{ $mensagem }}</div>
+
+                                        @enderror
                             </div>
                             <div class="form-group col-12">
-                                <textarea placeholder="Digite Sua Mensagem" id="contactForm" class="form-control style-white"></textarea>
+                                <textarea placeholder="Digite Sua Mensagem" name="mensContato" id="mensContato" class="form-control style-white">{{ old('mensContato') }}</textarea>
+                                @error('mensContato')
+                                        <div class="error"> {{ $mensagem }}</div>
+
+                                        @enderror
                             </div>
 
                             <div class="form-btn col-12">
-                                <button class="btn" type="submit">Envie uma mensagem</button>
+                                <button type="submit" class="btn"> Enviar via e-mail </button>
+                                <div id="contatoMensagem" class="msgContato"> </div>
                             </div>
                         </form>
                     </div>

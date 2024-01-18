@@ -32,4 +32,6 @@ Route::get('/modalidade/pilates',[ModalidadeController::class, 'pilates'])->name
 Route::get('/noticia', [NoticiasController::class, 'index'])->name('noticia');
 Route::get('/treino', [TreinoController::class, 'index'])->name('treino');
 Route::get('/contato', [ContatoController::class, 'index'])->name('contato');
+Route::post('/contato/enviar', [ContatoController::class, 'salvarNoBanco'])->name('contato.enviar');
+Route::post('/contato/enviarnew', [ContatoController::class, 'salvarEmail'])->name('contato.enviarnew');
 

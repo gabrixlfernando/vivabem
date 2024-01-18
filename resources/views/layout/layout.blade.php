@@ -16,6 +16,8 @@
     <meta name="msapplication-TileImage" content="{{ asset('../assets/img/favicons/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -312,12 +314,18 @@
                     <div class="widget footer-widget">
                         <h3 class="widget_title">Receba Noticias</h3>
                         <p class="footer-text">Receba 10% de desconto em seu primeiro pedido! Aproveite</p>
-                        <form class="newsletter-form">
+                        <form action="{{ route('contato.enviarnew') }}"  method="POST" class="newsletter-form" id="formEmail">
+                            @csrf
                             <div class="form-group">
                                 <i class="far fa-envelope"></i>
-                                <input class="form-control" type="email" placeholder="Endereço de E-mail" required="">
+                                <input class="form-control" type="email" name="emailContato" id="emailContato" placeholder="Endereço de E-mail" required="" value="{{ old('emailContato') }}">
+                                @error('emailContato')
+                                        <div class="error"> {{ $mensagem }}</div>
+
+                                @enderror
                             </div>
                             <button type="submit" class="btn style-r0 style2">Inscrever-se</button>
+                            <div id="contatoMensagem" class="msgContato"> </div>
                         </form>
                     </div>
                 </div>
@@ -369,6 +377,7 @@
     <script src="{{ asset('assets/js/bmi.calculator.js') }}"></script>
     <!-- Scripts JS personalizados aqui -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
 </body>
 
 </html>
