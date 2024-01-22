@@ -94,54 +94,41 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control style-white" name="nomeContato" id="nomeContato" placeholder="Seu Nome" value="{{ old('nomeContato') }}">
                                         <i class="far fa-user"></i>
-                                        @error('nomeContato')
-                                        <div class="error"> {{ $mensagem }}</div>
+                                        <div id="nomeContatoError" class="error-mensagem"></div>
 
-                                        @enderror
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control style-white" name="emailContato" id="emailContato" placeholder="Endereço de Email" value="{{ old('emailContato') }}">
                                         <i class="far fa-envelope"></i>
-                                        @error('emailContato')
-                                        <div class="error"> {{ $mensagem }}</div>
+                                        <div id="emailContatoError" class="error-mensagem"></div>
 
-                                        @enderror
 
-                                        
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control style-white" name="foneContato" id="foneContato" placeholder="Telefone" value="{{ old('foneContato') }}">
                                         <i class="far fa-envelope"></i>
-                                        @error('foneContato')
-                                        <div class="error"> {{ $mensagem }}</div>
-
-                                        @enderror
+                                        <div id="foneContatoError" class="error-mensagem"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <select name="assuntoContato" id="assuntoContato" class="form-select style-white"  value="{{ old('assuntoContato') }}">
                                     <option value="" disabled="" selected="" hidden="">Selecione o assunto</option>
-                                    <option value="one">Musculação</option>
-                                    <option value="two">Levantamento de força</option>
-                                    <option value="three">Aula de Meditação</option>
-                                    <option value="four">Aula de boxe</option>
+                                    <option value="Musculação">Musculação</option>
+                                    <option value="Levantamento de força">Levantamento de força</option>
+                                    <option value="Aula de Meditação">Aula de Meditação</option>
+                                    <option value="Aula de boxe">Aula de boxe</option>
                                 </select>
-                                @error('assuntoContato')
-                                        <div class="error"> {{ $mensagem }}</div>
-
-                                        @enderror
+                                <div id="assuntoContatoError" class="error-mensagem"></div>
                             </div>
                             <div class="form-group col-12">
                                 <textarea placeholder="Digite Sua Mensagem" name="mensContato" id="mensContato" class="form-control style-white">{{ old('mensContato') }}</textarea>
-                                @error('mensContato')
-                                        <div class="error"> {{ $mensagem }}</div>
-
-                                        @enderror
+                                <div id="mensContatoError" class="error-mensagem"></div>
                             </div>
 
                             <div class="form-btn col-12">

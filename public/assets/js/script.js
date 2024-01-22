@@ -1,56 +1,3 @@
-// function showAlert(mensagem, targetElementId, timeout = 3000){
-//     var messageDiv = document.getElementById(targetElementId);
-//     messageDiv.innerHTML = mensagem;
-//     messageDiv.classList.remove('msgContato');
-
-//     setTimeout(function(){
-//         messageDiv.classList.add('msgContato');
-//     }, timeout);
-// }
-
-
-
-// document.getElementById('formContato').addEventListener('submit', function(e){
-
-//     e.preventDefault();
-
-//     var data ={
-//         nomeContato : document.getElementById('nomeContato').value,
-//         emailContato : document.getElementById('emailContato').value,
-//         foneContato : document.getElementById('foneContato').value,
-//         assuntoContato : document.getElementById('assuntoContato').value,
-//         mensContato : document.getElementById('mensContato').value,
-//     }
-
-//     fetch('/contato/enviar', {
-//         method: 'POST',
-//         headers:{
-//             'Content-Type': 'application/json',
-//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('contant')
-//         },
-//         body: JSON.stringify(data)
-//     })
-//     .then(response => {
-//         if(!response.ok){
-//             throw new Error('Erro no envio do email');
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         showAlert (`<div class="alert alert-sucess">${data.sucess}</div>`, 'contatoMensagem');
-//         document.getElementById('formContato').reset();
-//     })
-//     .catch(errorResponse => {
-//         errorResponse.json().then(errorData =>  {
-//             if (errorData.errors) {
-//                 let errorMessages = Object.values(errorData.errors).map(error => `<div class="alert alert-danger">${error}</div>`).join('');
-//                 showAlert(errorMessages, 'contatoMensagem');
-//             }
-//         });
-//     });
-// });
-
-
 function showAlert(mensagem, targetElementId, timeout = 3000) {
     var messageDiv = document.getElementById(targetElementId);
     messageDiv.innerHTML = mensagem;
@@ -59,6 +6,18 @@ function showAlert(mensagem, targetElementId, timeout = 3000) {
     setTimeout(function() {
         messageDiv.classList.add('msgContato');
     }, timeout);
+}
+
+function displayError(erros) {
+    let todosOsErros = "";
+
+    for (const [key, value] of Object.entries(erros)) {
+        todosOsErros += `<div class="alert alert-danger">${value.join(", ")}</div>`;
+    }
+
+    if (todosOsErros) {
+        showAlert(todosOsErros, "contatoMensagem");
+    }
 }
 
 
@@ -85,28 +44,37 @@ document.getElementById('formContato').addEventListener('submit', function(e) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Erro na resposta do servidor');
+            return response.json().then(errorData => {
+                throw errorData;
+            });
         }
         return response.json();
     })
-    .then(data => {
-        showAlert(`<div class="alert alert-success">${data.success}</div>`, 'contatoMensagem');
-        document.getElementById('formContato').reset();
+    .then((data) => {
+        if (data.success) {
+            showAlert(
+                `<div class="alert alert-success">${data.success}</div>`,
+                 "contatoMensagem"
+            );
+            document.getElementById('formContato').reset();
+        } else{
+            showAlert(
+                `<div class="alert alert-danger">Erro ao enviar email.</div>`,
+                "contatoMensagem"
+            );
+        }
     })
-    .catch(errorResponse => {
-        errorResponse.json().then(errorData => {
-            if (errorData.errors) {
-                let errorMessages = Object.values(errorData.errors).map(error => `<div class="alert alert-danger">${error}</div>`).join('');
-                showAlert(errorMessages, 'contatoMensagem');
+
+    .catch(error => {
+            if (error.errors) {
+                displayError(error.errors);
+            }else {
+                console.log("Erro desconhecido", error);
             }
-        });
     });
-
-
-
-
-
 });
+
+
 
 document.getElementById('formEmail').addEventListener('submit', function(e) {
     e.preventDefault();

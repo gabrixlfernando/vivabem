@@ -16,6 +16,7 @@ class ContatoController extends Controller
 
     public function salvarNoBanco(Request $request){
 
+        // dd($request);
 
         $dados = $request->json()->all();
 
@@ -27,17 +28,22 @@ class ContatoController extends Controller
             'mensContato'       => 'required',
 
 
-        ])->validate();
+        ]);
 
-        $contato = Contato::create($validarDados);
+    if ($validarDados->fails()) {
+        return response()->json(['errors' => $validarDados->errors()], 422);
+
+    } else {
+
+        $contato = Contato::create($validarDados->validated());
 
         //Por email
         Mail::to('webdequebrada@smpsistema.com.br')->send(new ContatoEmail($contato));
 
-        return response()->json(['sucess' => 'Email registrado com sucesso']);
-
-
+        return response()->json(['success' => 'Email registrado com sucesso']);
     }
+}
+
 
     public function salvarEmail(Request $request){
         $dados = $request->json()->all();
