@@ -20,10 +20,9 @@ function displayError(erros) {
     }
 }
 
-
-
-document.getElementById('formContato').addEventListener('submit', function(e) {
+function formContato(e){
     e.preventDefault();
+    e.stopPropagation();
 
     var data = {
         nomeContato : document.getElementById('nomeContato').value,
@@ -72,19 +71,18 @@ document.getElementById('formContato').addEventListener('submit', function(e) {
                 console.log("Erro desconhecido", error);
             }
     });
-});
+}
 
-
-
-document.getElementById('formEmail').addEventListener('submit', function(e) {
+function formEmail(e){
     e.preventDefault();
+    e.stopPropagation();
 
     var data = {
-        emailContato : document.getElementById('emailContato').value
+        emailContato : document.getElementById('emailContato').value,
     };
 
 
-    fetch('/contato/enviar', {
+    fetch('/contato/enviarnew', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -94,25 +92,46 @@ document.getElementById('formEmail').addEventListener('submit', function(e) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Erro na resposta do servidor');
+            return response.json().then(errorData => {
+                throw errorData;
+            });
         }
         return response.json();
     })
-    .then(data => {
-        showAlert(`<div class="alert alert-success">${data.success}</div>`, 'contatoMensagem');
-        document.getElementById('formEmail').reset();
+    .then((data) => {
+        if (data.success) {
+            showAlert(
+                `<div class="alert alert-success">${data.success}</div>`,
+                 "contatoMensagem"
+            );
+            document.getElementById('formEmail').reset();
+        } else{
+            showAlert(
+                `<div class="alert alert-danger">Erro ao enviar email.</div>`,
+                "contatoMensagem"
+            );
+        }
     })
-    .catch(errorResponse => {
-        errorResponse.json().then(errorData => {
-            if (errorData.errors) {
-                let errorMessages = Object.values(errorData.errors).map(error => `<div class="alert alert-danger">${error}</div>`).join('');
-                showAlert(errorMessages, 'contatoMensagem');
+
+    .catch(error => {
+            if (error.errors) {
+                displayError(error.errors);
+            }else {
+                console.log("Erro desconhecido", error);
             }
-        });
     });
+}
 
 
 
+// document.getElementById('formContato').addEventListener('submit', function(e) {
+
+// });
 
 
-});
+
+// document.getElementById('formEmail').addEventListener('submit', function(e) {
+
+// });
+
+

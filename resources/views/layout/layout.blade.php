@@ -318,13 +318,10 @@
                             @csrf
                             <div class="form-group">
                                 <i class="far fa-envelope"></i>
-                                <input class="form-control" type="email" name="emailContato" id="emailContato" placeholder="Endereço de E-mail" required="" value="{{ old('emailContato') }}">
-                                @error('emailContato')
-                                        <div class="error"> {{ $mensagem }}</div>
-
-                                @enderror
+                                <input class="form-control" type="email" name="emailContato" id="emailContato" placeholder="Endereço de E-mail" value="{{ old('emailContato') }}">
+                                <div id="emailContatoError" class="error-mensagem"></div>
                             </div>
-                            <button type="submit" class="btn style-r0 style2">Inscrever-se</button>
+                            <button type="submit" class="btn style-r0 style2" onclick="formEmail(event)">Inscrever-se</button>
                             <div id="contatoMensagem" class="msgContato"> </div>
                         </form>
                     </div>
