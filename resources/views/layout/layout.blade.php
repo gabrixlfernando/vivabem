@@ -10,10 +10,10 @@
     <meta name="robots" content="INDEX,FOLLOW">
     <title>@yield('title') - Academia Viva Bem</title>
     {{-- links --}}
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('../assets/img/favicons/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/logoVivaBem.svg') }}">
     <link rel="manifest" href="{{ asset('../assets/img/favicons/manifest.json') }}">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{ asset('../assets/img/favicons/ms-icon-144x144.png') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('assets/img/logoVivaBem.svg') }}">
     <meta name="theme-color" content="#ffffff">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -216,8 +216,13 @@
                             </div>
                         </div>
                         <div class="col-auto d-xxl-block d-none">
-                            <div class="navbar-right-desc">
+                            {{-- <div class="navbar-right-desc">
                                 <i class="fas fa-phone-volume"></i><a href="tel:+2590256215">+259 (0) 256 215</a>
+                            </div> --}}
+                            <div class="header-button">
+                                <a href="{{ url('/login') }}" class="btn style2 style-r0 d-xl-block d-none">
+                                   Login
+                                </a>
                             </div>
                         </div>
                         <div class="col-auto d-none d-lg-block">

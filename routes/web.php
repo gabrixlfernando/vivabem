@@ -6,6 +6,7 @@ use App\Http\Controllers\ModalidadeController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\SobreController;
 use App\Http\Controllers\TreinoController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,17 @@ Route::get('/modalidade/pilates',[ModalidadeController::class, 'pilates'])->name
 Route::get('/noticia', [NoticiasController::class, 'index'])->name('noticia');
 Route::get('/treino', [TreinoController::class, 'index'])->name('treino');
 Route::get('/contato', [ContatoController::class, 'index'])->name('contato');
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'autenticar'])->name('login');
+
+
+Route::get('/dashboard/alunos', [AlunoController::class, 'index'])->name('dashboard.alunos');
+Route::get('/dashboard/administrativo', [AdministrativoController::class, 'index'])->name('dashboard.administrativo');
+Route::get('/dashboard/instrutor', [InstrutorController::class, 'index'])->name('dashboard.instrutor');
+
+
+
 Route::post('/contato/enviar', [ContatoController::class, 'salvarNoBanco'])->name('contato.enviar');
 Route::post('/contato/enviarnew', [ContatoController::class, 'salvarEmail'])->name('contato.enviarnew');
 
