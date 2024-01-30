@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdministrativoController;
+use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InstrutorController;
 use App\Http\Controllers\ModalidadeController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\SobreController;

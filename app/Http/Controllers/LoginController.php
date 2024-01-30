@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
+use App\Models\Funcionario;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -28,7 +31,39 @@ class LoginController extends Controller
 
         $request->validate($regras, $msg);
 
-        print_r($request->all());
+        // print_r($request->all());
+
+        $email = $request->get('email');
+        $senha = $request->get('password');
+
+        // echo "E-mail: $email | Senha: $senha";
+        // echo "<br>";
+
+        $usuario = Usuario::where('email', $email)->first();
+
+
+        if(!$usuario){
+            return back()->witchErrors(['email' => 'O email informado não está cadastrado.']);
+        }
+
+
+
+        if($usuario->senha != $senha){
+            return back()->withErrors(['password' => 'Senha Incorreta.']);
+        }
+
+        // dd($usuario);
+
+        $tipoUsuario = $usuario ->tipo_usuario;
+
+        // dd($tipoUsuario);
+
+        if($tipoUsuario instanceof Aluno){
+            dd($tipoUsuario);
+        }elseif($tipoUsuario instanceof Funcionario){
+            dd($tipoUsuario);
+        }
+
 
 
     }
