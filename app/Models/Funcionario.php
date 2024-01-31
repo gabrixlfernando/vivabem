@@ -11,3 +11,5 @@ class Funcionario extends Model
     protected $table = 'funcionario';
     protected $primaryKey = 'idFuncionario';
 }
+
+

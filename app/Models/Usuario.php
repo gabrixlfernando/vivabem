@@ -16,3 +16,5 @@ class Usuario extends Model
         return $this-> morphTo('tipo_usuario', 'tipo_usuario_type', 'tipo_usuario_id');
     }
 }
+
+

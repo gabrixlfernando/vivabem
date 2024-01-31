@@ -22,18 +22,28 @@
         @csrf
       <img class="mb-4" src="{{ asset('assets/img/logoVivaBem.svg') }}" alt="" width="192" height="192">
       <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+
+       <!-- Campo de E-mail -->
       <label for="inputEmail" class="sr-only">Email </label>
       <input type="email" name="email" class="form-control" placeholder="Informe seu e-mail" value="{{ old('email') }}">
       {{ $errors->has('email') ? $errors->first('email') : '' }}
+
+        <!-- Campo de Senha -->
       <label for="inputPassword" class="sr-only">Senha</label>
       <input type="password"  name="password" class="form-control" placeholder="Informe sua senha" value="{{ old('password') }}" >
       {{ $errors->has('password') ? $errors->first('password') : '' }}
+
+       <!-- Opção de "Lembre-me" -->
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Lembre-me
         </label>
       </div>
+
+       <!-- Botão de Submit -->
       <button class="btn btn-lg btn-primary btn-block" type="submit" idform="formLogin" value="Login">Acessar</button>
+
+       <!-- Mensagem de Copyright -->
       <p class="mt-5 mb-3 text-muted">&copy; 2023-20124</p>
     </form>
   </body>
