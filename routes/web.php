@@ -50,3 +50,7 @@ Route::get('/dashboard/instrutor', [InstrutorController::class, 'index'])->name(
 Route::post('/contato/enviar', [ContatoController::class, 'salvarNoBanco'])->name('contato.enviar');
 Route::post('/contato/enviarnew', [ContatoController::class, 'salvarEmail'])->name('contato.enviarnew');
 
+Route::get('/sair', function(){
+    session()->flush();
+    return redirect('/');
+})->name('sair');

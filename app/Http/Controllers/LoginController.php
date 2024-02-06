@@ -63,10 +63,46 @@ class LoginController extends Controller
 
          // Realiza ações diferentes com base no tipo de usuário
         if($tipoUsuario instanceof Aluno){
-            dd($tipoUsuario);
+
+            //dd($tipoUsuario);
+
+           session([
+                'id'            => $tipoUsuario->idAluno,
+                'nome'          => $tipoUsuario->nomeAluno,
+                'tipo_usuario'  => 'Aluno',
+           ]);
+
+           return redirect()->route('dashboard.alunos');
+
         }elseif($tipoUsuario instanceof Funcionario){
-            dd($tipoUsuario);
+
+            if($tipoUsuario->tipoFuncionario == 'administrativo'){
+                //dd($tipoUsuario);
+
+                session([
+                    'id'            => $tipoUsuario->idFuncionario,
+                    'nome'          => $tipoUsuario->nomeFuncionario,
+                    'tipo_usuario'  => $tipoUsuario->tipoFuncionario,
+               ]);
+
+               return redirect()->route('dashboard.administrativo');
+
+            }elseif($tipoUsuario->tipoFuncionario == 'tecnico'){
+                //dd($tipoUsuario);
+
+                session([
+                    'id'            => $tipoUsuario->idFuncionario,
+                    'nome'          => $tipoUsuario->nomeFuncionario,
+                    'tipo_usuario'  => $tipoUsuario->tipoFuncionario,
+               ]);
+
+               return redirect()->route('dashboard.instrutor');
+
+            }
         }
+
+
+        return back()->withErrors(['email' => 'Erro desconhecido autenticação']);
 
 
 
