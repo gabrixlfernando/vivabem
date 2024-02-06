@@ -1,5 +1,22 @@
-<h1>instrutor</h1>
+@extends('layout.layout')
+
+@section('title', 'Dashboard')
+
+@section('conteudo')
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<h1>ADMINISTRATIVO</h1>
+
+<a href="{{ route('sair') }}" class="btn btn-danger">sair</a>
+
+@endsection
+
+{{-- <h1>instrutor</h1>
 
 
 
-<a href="{{ route('sair') }}" class="btn btn-danger">SAIR</a>
+<a href="{{ route('sair') }}" class="btn btn-danger">SAIR</a> --}}

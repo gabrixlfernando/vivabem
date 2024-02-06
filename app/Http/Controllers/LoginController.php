@@ -87,7 +87,7 @@ class LoginController extends Controller
 
                return redirect()->route('dashboard.administrativo');
 
-            }elseif($tipoUsuario->tipoFuncionario == 'tecnico'){
+            }elseif($tipoUsuario->tipoFuncionario == 'instrutor'){
                 //dd($tipoUsuario);
 
                 session([
