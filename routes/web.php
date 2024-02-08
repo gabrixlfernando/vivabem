@@ -10,6 +10,8 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\SobreController;
 use App\Http\Controllers\TreinoController;
 use App\Http\Controllers\LoginController;
+use App\Http\Middleware\AutAcademiaMiddleware;
+use App\Http\Middleware\LogAcessoAcademia;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,9 +43,29 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'autenticar'])->name('login');
 
 
-Route::get('/dashboard/alunos', [AlunoController::class, 'index'])->name('dashboard.alunos');
-Route::get('/dashboard/administrativo', [AdministrativoController::class, 'index'])->name('dashboard.administrativo');
-Route::get('/dashboard/instrutor', [InstrutorController::class, 'index'])->name('dashboard.instrutor');
+Route::middleware(['autenticacao:aluno'])->group(function(){
+
+    Route::get('/dashboard/alunos', [AlunoController::class, 'index'])->name('dashboard.alunos');
+
+});
+
+
+Route::middleware(['autenticacao:administrativo'])->group(function(){
+
+    Route::get('/dashboard/administrativo', [AdministrativoController::class, 'index'])->name('dashboard.administrativo');
+
+});
+
+
+
+Route::middleware(['autenticacao:instrutor'])->group(function(){
+
+    Route::get('/dashboard/instrutor', [InstrutorController::class, 'index'])->name('dashboard.instrutor');
+
+});
+
+
+
 
 
 

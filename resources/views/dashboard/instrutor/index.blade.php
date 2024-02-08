@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('dashboard.layoutdash.index')
 
 @section('title', 'Dashboard')
 

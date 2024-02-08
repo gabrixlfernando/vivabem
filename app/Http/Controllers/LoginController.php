@@ -15,8 +15,6 @@ class LoginController extends Controller
 
     public function autenticar(Request $request)
     {
-        // return "chguei aqui";
-
          // Regras de validação para os campos 'email' e 'password'
         $regras = [
             'email'    => 'required|email',
@@ -31,21 +29,16 @@ class LoginController extends Controller
         // Executa a validação dos dados recebidos na requisição
         $request->validate($regras, $msg);
 
-        // print_r($request->all());
-
         // Obtém os valores dos campos 'email' e 'password' da requisição
         $email = $request->get('email');
         $senha = $request->get('password');
-
-        // echo "E-mail: $email | Senha: $senha";
-        // echo "<br>";
 
         // Busca um usuário no banco de dados com base no email fornecido
         $usuario = Usuario::where('email', $email)->first();
 
          // Verifica se o usuário existe no banco de dados
         if(!$usuario){
-            return back()->witchErrors(['email' => 'O email informado não está cadastrado.']);
+            return back()->withErrors(['email' => 'O email informado não está cadastrado.']);
         }
 
 
@@ -54,21 +47,16 @@ class LoginController extends Controller
             return back()->withErrors(['password' => 'Senha Incorreta.']);
         }
 
-        // dd($usuario);
-
         // Obtém o tipo de usuário associado ao usuário autenticado
         $tipoUsuario = $usuario ->tipo_usuario;
-
-        // dd($tipoUsuario);
 
          // Realiza ações diferentes com base no tipo de usuário
         if($tipoUsuario instanceof Aluno){
 
-            //dd($tipoUsuario);
-
            session([
                 'id'            => $tipoUsuario->idAluno,
                 'nome'          => $tipoUsuario->nomeAluno,
+                'email'         => $tipoUsuario->email,
                 'tipo_usuario'  => 'Aluno',
            ]);
 
@@ -77,22 +65,22 @@ class LoginController extends Controller
         }elseif($tipoUsuario instanceof Funcionario){
 
             if($tipoUsuario->tipoFuncionario == 'administrativo'){
-                //dd($tipoUsuario);
 
                 session([
                     'id'            => $tipoUsuario->idFuncionario,
                     'nome'          => $tipoUsuario->nomeFuncionario,
+                    'email'         => $tipoUsuario->email,
                     'tipo_usuario'  => $tipoUsuario->tipoFuncionario,
                ]);
 
                return redirect()->route('dashboard.administrativo');
 
             }elseif($tipoUsuario->tipoFuncionario == 'instrutor'){
-                //dd($tipoUsuario);
 
                 session([
                     'id'            => $tipoUsuario->idFuncionario,
                     'nome'          => $tipoUsuario->nomeFuncionario,
+                    'email'         => $tipoUsuario->email,
                     'tipo_usuario'  => $tipoUsuario->tipoFuncionario,
                ]);
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class AlunoController extends Controller
 {
     public function index(){
-        return view('site.dashboard.alunos.index');
+        return view('dashboard.alunos.index');
     }
 
 }
