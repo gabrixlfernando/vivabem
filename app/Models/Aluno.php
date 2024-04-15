@@ -11,6 +11,8 @@ class Aluno extends Model
     protected $table = 'alunos';
     protected $primaryKey = 'idAluno';
 
+   
+
     public function usuario(){
         return $this->morphOne(Usuario::class, 'tipo_usuario');
     }
