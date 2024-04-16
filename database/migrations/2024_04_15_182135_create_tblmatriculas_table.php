@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tblmatriculas', function (Blueprint $table) {
-            $table->unsignedInteger('idMatricula')->primary(); // Definindo idMatricula como inteiro e chave primária
+            $table->id('idMatricula');
+            // $table->unsignedInteger('idMatricula')->primary(); // Definindo idMatricula como inteiro e chave primária
             $table->dateTime('dataInicioMatricula');
             $table->string('statusMatricula', 20);
             $table->unsignedInteger('idAluno')->length(11); // Definindo o tamanho do campo como INT(11)

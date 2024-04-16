@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('aluno')->group(function (){
     Route::get('/{id}/matricula', [AlunoController::class, 'getMatricula']);
     Route::get('/{id}/plano', [AlunoController::class, 'getPlano']);
+    Route::get('/{id}/aula', [AlunoController::class, 'getAula']);
 });

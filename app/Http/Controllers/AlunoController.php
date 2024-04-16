@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+use App\Models\Aula;
 use App\Models\Matricula;
 use App\Models\Plano;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AlunoController extends Controller
 {
@@ -56,6 +58,31 @@ class AlunoController extends Controller
         }
 
         return response()->json(['plano' => $plano], 200);
+    }
+
+
+    public function getAula($idAluno)
+    {
+        $matriculas = Matricula::where('idAluno', $idAluno)->pluck('idMatricula');
+
+        if ($matriculas->isEmpty()) {
+            return response()->json(['message' => 'Matricula não encontrada para o aluno.'], 404);
+        }
+
+        $aulas = Aula::whereExists(function ($query) use ($idAluno) {
+            $query->select(DB::raw(1))
+            ->from('alunos')
+            ->join('tblaulamatricula', 'alunos.idAluno', '=', 'tblaulamatricula.idAluno')
+            ->whereColumn('tblaulamatricula.idAula', 'tblaulas.idAula')
+            ->where('tblaulamatricula.idAluno', $idAluno);
+        })->get();
+
+
+        if($aulas->isEmpty()) {
+            return response()->json(['message' => 'Aula não encontrada para o aluno.'], 404);
+        }
+
+        return response()->json(['aulas' => $aulas], 200);
     }
 
 }
